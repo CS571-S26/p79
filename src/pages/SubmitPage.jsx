@@ -43,11 +43,25 @@ function SubmitPage() {
       return;
     }
 
-    console.log("Submitted tip:", {
-      name, category, description, hours, price, rating,
-      lat: lat ? parseFloat(lat) : null,
-      lng: lng ? parseFloat(lng) : null,
-    });
+    // Build a tip object that matches the shape of places.js entries
+    const newTip = {
+      id: Date.now(),                          // unique numeric ID (timestamp)
+      name: name.trim(),
+      category,
+      description: description.trim(),
+      hours: hours.trim() || "Not specified",
+      price: price.trim() || "Not specified",
+      rating: parseInt(rating),
+      noiseLevel: "N/A",
+      address: null,
+      mapsUrl: null,
+      lat: lat.trim() ? parseFloat(lat) : null,
+      lng: lng.trim() ? parseFloat(lng) : null,
+    };
+
+    // Append to the existing submitted tips in localStorage
+    const existing = JSON.parse(localStorage.getItem("csh-submitted-tips") || "[]");
+    localStorage.setItem("csh-submitted-tips", JSON.stringify([...existing, newTip]));
 
     // Reset form
     setName(""); setCategory("study"); setDescription("");
@@ -59,7 +73,7 @@ function SubmitPage() {
 
   return (
     <Container className="py-5" style={{ maxWidth: "640px" }}>
-      <h2 className="text-center mb-1">Submit a Tip</h2>
+      <h1 className="text-center fw-bold mb-1" style={{ fontSize: "1.75rem" }}>Submit a Tip</h1>
       <p className="text-center text-muted mb-4">
         Know a great spot or life-saving hack? Share it with your fellow students!
       </p>
@@ -76,7 +90,8 @@ function SubmitPage() {
       )}
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
+        {/* controlId links <label> to <input> via htmlFor/id — WCAG 1.3.1 */}
+        <Form.Group className="mb-3" controlId="tip-name">
           <Form.Label>Name <span className="text-danger">*</span></Form.Label>
           <Form.Control
             type="text"
@@ -86,7 +101,7 @@ function SubmitPage() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="tip-category">
           <Form.Label>Category</Form.Label>
           <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="study">📚 Study Spots</option>
@@ -97,7 +112,7 @@ function SubmitPage() {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="tip-description">
           <Form.Label>Description <span className="text-danger">*</span></Form.Label>
           <Form.Control
             as="textarea"
@@ -110,7 +125,7 @@ function SubmitPage() {
 
         <Row>
           <Col>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="tip-hours">
               <Form.Label>Hours</Form.Label>
               <Form.Control
                 type="text"
@@ -121,7 +136,7 @@ function SubmitPage() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="tip-price">
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type="text"
@@ -145,7 +160,7 @@ function SubmitPage() {
             </p>
             <Row>
               <Col>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="tip-lat">
                   <Form.Label>Latitude</Form.Label>
                   <Form.Control
                     type="number"
@@ -162,7 +177,7 @@ function SubmitPage() {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="tip-lng">
                   <Form.Label>Longitude</Form.Label>
                   <Form.Control
                     type="number"
@@ -182,7 +197,7 @@ function SubmitPage() {
           </>
         )}
 
-        <Form.Group className="mb-4">
+        <Form.Group className="mb-4" controlId="tip-rating">
           <Form.Label>Your Rating: {rating} ⭐</Form.Label>
           <Form.Range
             min="1" max="5" step="1"

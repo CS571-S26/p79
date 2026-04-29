@@ -56,11 +56,13 @@ function createColoredIcon(category) {
   });
 }
 
-// Only places with a real physical location
-const physicalPlaces = places.filter((p) => p.lat && p.lng);
-
 function MapPage() {
   const [activeFilter, setActiveFilter] = useState("all");
+
+  // Merge built-in places with user-submitted tips (read inside component so
+  // it picks up new submissions without a page reload)
+  const submittedTips = JSON.parse(localStorage.getItem("csh-submitted-tips") || "[]");
+  const physicalPlaces = [...places, ...submittedTips].filter((p) => p.lat && p.lng);
 
   const visiblePlaces =
     activeFilter === "all"
@@ -69,7 +71,7 @@ function MapPage() {
 
   return (
     <Container className="py-4">
-      <h2 className="text-center mb-1">Campus Map</h2>
+      <h1 className="text-center fw-bold mb-1" style={{ fontSize: "1.75rem" }}>Campus Map</h1>
       <p className="text-center text-muted mb-3">
         Click any pin to see details. Use the filters to show specific categories.
       </p>

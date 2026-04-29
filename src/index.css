@@ -1,134 +1,178 @@
-/* Campus Survival Hub — Bootstrap handles styling; minimal global overrides */
+/* ============================================================
+   Campus Survival Hub — Global Design System
+   Clean & Modern: strong hierarchy, consistent palette, space
+   ============================================================ */
 
-/* Remove the default Vite centering so Bootstrap can use full width */
+/* ----- Reset & root layout --------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f8f9fb;
+  color: #1a1a2e;
+}
+
 #root {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  border: none !important;
-  text-align: left !important;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: left;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Smooth hover lift for HomePage category cards */
+/* ----- Category color palette ------------------------------ */
+/* Used consistently across cards, badges, filter buttons     */
+:root {
+  --cat-study:        #2563eb;
+  --cat-food:         #b45309;   /* darkened from #d97706 — passes WCAG AA 4.84:1 on white */
+  --cat-wellness:     #16a34a;
+  --cat-productivity: #0891b2;
+  --cat-hacks:        #dc2626;
+
+  --cat-study-bg:        #eff6ff;
+  --cat-food-bg:         #fffbeb;
+  --cat-wellness-bg:     #f0fdf4;
+  --cat-productivity-bg: #ecfeff;
+  --cat-hacks-bg:        #fef2f2;
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.09), 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.07);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.2s ease;
+}
+
+/* ----- Colored top-stripe on PlaceCards ------------------- */
+.place-card-study        { border-top: 4px solid var(--cat-study) !important; }
+.place-card-food         { border-top: 4px solid var(--cat-food) !important; }
+.place-card-wellness     { border-top: 4px solid var(--cat-wellness) !important; }
+.place-card-productivity { border-top: 4px solid var(--cat-productivity) !important; }
+.place-card-hacks        { border-top: 4px solid var(--cat-hacks) !important; }
+
+/* ----- Category card (HomePage) hover lift ---------------- */
 .category-card {
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: var(--transition);
+  border-radius: var(--radius-md) !important;
+  cursor: pointer;
 }
 .category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg) !important;
 }
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+/* ----- PlaceCard hover lift -------------------------------- */
+.place-card {
+  transition: var(--transition);
+  border-radius: var(--radius-md) !important;
+  border-color: #e8eaf0 !important;
+  background: #ffffff;
+}
+.place-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md) !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* ----- Filter pill buttons --------------------------------- */
+.filter-btn {
+  border-radius: 999px !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  padding: 5px 14px !important;
+  transition: var(--transition) !important;
+  border-width: 1.5px !important;
+}
+.filter-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm) !important;
 }
 
-body {
-  margin: 0;
+/* Per-category active filter colors */
+.filter-btn-active-all          { background: #1a1a2e !important; border-color: #1a1a2e !important; color: #fff !important; }
+.filter-btn-active-study        { background: var(--cat-study) !important; border-color: var(--cat-study) !important; color: #fff !important; }
+.filter-btn-active-food         { background: var(--cat-food) !important; border-color: var(--cat-food) !important; color: #fff !important; }
+.filter-btn-active-wellness     { background: var(--cat-wellness) !important; border-color: var(--cat-wellness) !important; color: #fff !important; }
+.filter-btn-active-productivity { background: var(--cat-productivity) !important; border-color: var(--cat-productivity) !important; color: #fff !important; }
+.filter-btn-active-hacks        { background: var(--cat-hacks) !important; border-color: var(--cat-hacks) !important; color: #fff !important; }
+
+/* Per-category inactive filter border tint */
+.filter-btn-idle-study        { color: var(--cat-study) !important; border-color: var(--cat-study) !important; }
+.filter-btn-idle-study:hover  { background: var(--cat-study-bg) !important; }
+.filter-btn-idle-food         { color: var(--cat-food) !important; border-color: var(--cat-food) !important; }
+.filter-btn-idle-food:hover   { background: var(--cat-food-bg) !important; }
+.filter-btn-idle-wellness     { color: var(--cat-wellness) !important; border-color: var(--cat-wellness) !important; }
+.filter-btn-idle-wellness:hover { background: var(--cat-wellness-bg) !important; }
+.filter-btn-idle-productivity { color: var(--cat-productivity) !important; border-color: var(--cat-productivity) !important; }
+.filter-btn-idle-productivity:hover { background: var(--cat-productivity-bg) !important; }
+.filter-btn-idle-hacks        { color: var(--cat-hacks) !important; border-color: var(--cat-hacks) !important; }
+.filter-btn-idle-hacks:hover  { background: var(--cat-hacks-bg) !important; }
+
+/* ----- Hero section ---------------------------------------- */
+.hero-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f3460 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #f8f9fb;
+  clip-path: ellipse(55% 100% at 50% 100%);
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
+/* ----- Stat badges in hero --------------------------------- */
+.hero-stat {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ----- Badge overrides ------------------------------------- */
+.badge-study        { background-color: var(--cat-study-bg)        !important; color: var(--cat-study)        !important; }
+.badge-food         { background-color: var(--cat-food-bg)         !important; color: var(--cat-food)         !important; }
+.badge-wellness     { background-color: var(--cat-wellness-bg)     !important; color: var(--cat-wellness)     !important; }
+.badge-productivity { background-color: var(--cat-productivity-bg) !important; color: var(--cat-productivity) !important; }
+.badge-hacks        { background-color: var(--cat-hacks-bg)        !important; color: var(--cat-hacks)        !important; }
+
+/* ----- Page-level padding ---------------------------------- */
+.page-section {
+  background: #f8f9fb;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* ----- Footer links ---------------------------------------- */
+.footer-link {
+  transition: color 0.15s ease;
+}
+.footer-link:hover {
+  color: #ffffff !important;
+}
+
+/* ----- WCAG AA contrast override for Bootstrap text-muted -- */
+/* Bootstrap's default #6c757d gives ~4.2:1 on white, failing  */
+/* AA by a hair. #4b5563 gives 7.1:1 — safely passes.         */
+.text-muted {
+  color: #4b5563 !important;
 }

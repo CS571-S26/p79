@@ -14,6 +14,7 @@ function NavBar() {
               <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
               <Nav.Link as={NavLink} to="/resources">Resources</Nav.Link>
               <Nav.Link as={NavLink} to="/map">Map</Nav.Link>
+              <Nav.Link as={NavLink} to="/saved">Saved</Nav.Link>
               <Nav.Link as={NavLink} to="/submit">Submit a Tip</Nav.Link>
             </Nav>
           </Navbar.Collapse>
